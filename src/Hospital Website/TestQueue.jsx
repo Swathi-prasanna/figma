@@ -1,9 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 const TestQueue=() =>{
-
-    const navigate=useNavigate();
-
+    
     const testData=[
         {
             orderid:"LAB001",
@@ -15,7 +13,6 @@ const TestQueue=() =>{
             status:"processing",
             action:"Enter Results",
             btnClass:"btn-success",
-            path:"/ResultEntry",
        },
         {
             orderid:"LAB002",
@@ -27,7 +24,6 @@ const TestQueue=() =>{
             status:"sample-collected",
             action:"Start Processing",
             btnClass:"btn-primary",
-            path:"/Start Processing",
         },
         {
             orderid:"LAB003",
@@ -39,7 +35,6 @@ const TestQueue=() =>{
             status:"completed",
             action:"View Report",
             btnClass:"btn-light border",
-            path:"/View Report",
         },
         {
             orderid:"LAB004",
@@ -51,8 +46,6 @@ const TestQueue=() =>{
             status:"processing",
             action:"Enter Results",
             btnClass:"btn-success",
-            path:"/Enter Results",
-    
         },
     ];
     return(
@@ -99,9 +92,8 @@ const TestQueue=() =>{
                                     </td>
 
                                     <td>
-                                         <button className={`btn ${item.btnClass}`}
-                                            onClick={()=>navigate(item.path)}>
-                                             {item.action}
+                                         <button className={`btn ${item.btnClass}`}>
+                                            {item.action}
                                          </button>
                                             </td> 
                                              </tr>

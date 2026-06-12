@@ -125,8 +125,7 @@ function App() {
           <Navbar/>
           <Nursingdashboard/>
           <HospitalData/>
-          <TestQueue />
-          <ResultEntry />    
+          <TestQueue />    
         </div>
       </div>
       
