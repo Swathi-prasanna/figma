@@ -9,6 +9,7 @@ const Dashboard = () => {
       <Nursingdashboard />
       <HospitalData />
       <TestQueue />
+      
     </>
   );
 };
