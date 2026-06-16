@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import {Routes, Route } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom";
 
 
 // import StaticComponents from "./tasks/StaticComponents";
@@ -47,15 +46,12 @@ import {Routes, Route } from "react-router-dom"
 // import ThirdComp from "./pratice-tasks/ThirdComp";
 import Sidebar from "./Hospital Website/Sidebar";
 import Navbar from "./Hospital Website/Navbar";
-import Nursingdashboard from "./Hospital Website/Nursingdashboard";
-import HospitalData from "./Hospital Website/HospitalData";
+import Dashboard from "./Hospital Website/Dashboard";
 import TestQueue from "./Hospital Website/TestQueue";
 import ResultEntry from "./Hospital Website/ResultEntry";
+import SampleCollection from "./Hospital Website/SampleCollection";
 
 function App() {
-  const student = {
-    name : "Swathi",
-  }
   return (
     <div className="App">
       {/* <StaticComponents/>
@@ -120,15 +116,20 @@ function App() {
       <SecondComp name="Nani"/>
       <ThirdComp name={student}/> */}
       <div className="app-layout">
-        <Sidebar/>
-        <div  className="content">
-          <Navbar/>
-          <Nursingdashboard/>
-          <HospitalData/>
-          <TestQueue />    
+        <Sidebar />
+        <div className="content">
+          <Navbar />
+          <main className="page-content">
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/test-queue" element={<TestQueue />} />
+              <Route path="/sample-collection" element={<SampleCollection />} />
+              <Route path="/results-entry" element={<ResultEntry />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
         </div>
       </div>
-      
     </div>
   );
 }

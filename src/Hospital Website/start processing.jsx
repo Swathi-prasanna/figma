@@ -1,85 +1,104 @@
-import React from "react"
-import"./StartProcessing.css";
-function StartProcessing(){
-    return(
-        <div className="modal">
-            <div className="modal-box">
-                <div className="modal-header">
-                    <div>
-                        <h2>start Processing</h2>
-                        <p> LAB002-Lipid Profile</p>
-                        <button className="close-btn"><X size={24}/></button>
-                    </div>
-                    <div className="patient-card">
-                        <div className="info-item">
-                            <label>Patient</label>
-                            <h5>Sarah Williaams</h5>
-                            <span>PAT002</span>
-                        </div>
-                        <div className="info-item">
-                            <label>Test Type</label>
-                            <label>Lipid Profile</label>
-                        </div>
-                        <div className="info-item">
-                            <label>Priority</label>
-                            <div classNae="priority-badge">routine</div>
-                       </div>
-                       <div className="info-item">
-                        <label>Ordered By</label>
-                        <h5>Dr.Lisa Brown</h5>
-                       </div>
-                    </div>
-                    <div className="form-group">
-                        <label>Sample ID*</label>
-                        <input type="text" defaultValue="LAB002"/>
-                    </div>
-                    <div  className="row-group">
-                        <label>Processing Started By *</label>
-                        <input type="text" defaultValue="Lab Tech- Dr Michael Lee"/>
-                    </div>
-                    <div className="form-group">
-                        <label>Processing Start Time*</label>
-                        <input type="text"/>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label>Equipment Used*</label>
-                        <input type="text"/>
-                    </div>
-                    <div className="form-group">
-                        <label>sample Condition</label>
-                        <input type="text"/> 
-                    </div>
-                    <hr/>
-                    <div className="form-group">
-                        <label>Technician Name</label>
-                        <input type="text"/>
-                    </div>
-                    <div className="form-group">
-                        <label>Sample condition</label>
-                    </div>
-                    <div className="form-group">
-                        <label>Processing Notes</label>
-                        <textarea rows="4" placeholder="Any special observations during processing"></textarea>
-                    </div>
-                    <div className="check-item">
-                        <h4>Processing Checklist</h4>
-                        <ul>
-                            <li>Sample integrity Verified</li>
-                            <li>Equipment calibrated</li>
-                            <li>Quality control performed</li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="button-group">
-                    <button className="confirm-btn">
-                        Confirm Start Processing
-                    </button>
-                    <button className="cancel-btn">
-                        cancel
-                    </button>
-                </div>
-            </div>
-    );
-}
+import React, { useState } from "react";
+import Startprocess2 from "./startprocess2";
+
+const StartProcessing = ({ order, onClose }) => {
+  const [showChecklistStep, setShowChecklistStep] = useState(false);
+  const currentOrder = order || {
+    orderid: "LAB002",
+    patient: "Sarah Williams",
+    patientid: "PAT002",
+    test: "Lipid Profile",
+    doctor: "Dr. Lisa Brown",
+    priority: "routine",
+  };
+
+  if (showChecklistStep) {
+    return <Startprocess2 order={currentOrder} onClose={onClose} />;
+  }
+
+  return (
+    <div className="processing-overlay">
+      <div className="processing-modal">
+        <div className="processing-header">
+          <div>
+            <h2>Start Processing</h2>
+            <p>
+              {currentOrder.orderid} - {currentOrder.test}
+            </p>
+          </div>
+          <button
+            type="button"
+            className="processing-close"
+            onClick={onClose}
+            aria-label="Close start processing form"
+          >
+            x
+          </button>
+        </div>
+
+        <div className="processing-summary">
+          <div>
+            <span>Patient</span>
+            <strong>{currentOrder.patient}</strong>
+            <small>{currentOrder.patientid}</small>
+          </div>
+          <div>
+            <span>Test Type</span>
+            <strong>{currentOrder.test}</strong>
+          </div>
+          <div>
+            <span>Priority</span>
+            <strong className="processing-badge">{currentOrder.priority}</strong>
+          </div>
+          <div>
+            <span>Ordered By</span>
+            <strong>{currentOrder.doctor}</strong>
+          </div>
+        </div>
+
+        <form className="processing-form">
+          <label>
+            <span>Sample ID *</span>
+            <input type="text" defaultValue={currentOrder.orderid} />
+          </label>
+
+          <div className="processing-row">
+            <label>
+              <span>Processing Started By *</span>
+              <input type="text" defaultValue="Lab Tech - Dr. Michael Lee" />
+            </label>
+            <label>
+              <span>Processing Start Time *</span>
+              <input type="text" />
+            </label>
+          </div>
+
+          <label>
+            <span>Equipment Used *</span>
+            <input type="text" />
+          </label>
+
+          <label>
+            <span>Sample Condition</span>
+            <input type="text" />
+          </label>
+
+          <div className="processing-actions">
+            <button type="button" className="btn btn-light" onClick={onClose}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => setShowChecklistStep(true)}
+            >
+              Confirm Start Processing
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
 export default StartProcessing;

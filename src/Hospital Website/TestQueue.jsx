@@ -1,6 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import Enterresult from "./Enterresult";
+import StartProcessing from "./start processing";
+import LaboratoryReport from "./Laboratory dashboard";
+
 const TestQueue=() =>{
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [processingOrder, setProcessingOrder] = useState(null);
+    const [reportOrder, setReportOrder] = useState(null);
     
     const testData=[
         {
@@ -49,7 +55,7 @@ const TestQueue=() =>{
         },
     ];
     return(
-    <section className="hospital-data">
+    <section className="test-queue-section">
         <div className="container">
             <div className="card border-0 shadow-sm">
                 <div className="card-body">
@@ -92,7 +98,21 @@ const TestQueue=() =>{
                                     </td>
 
                                     <td>
-                                         <button className={`btn ${item.btnClass}`}>
+                                         <button
+                                            className={`btn ${item.btnClass}`}
+                                            type="button"
+                                            onClick={() => {
+                                                if (item.action === "Enter Results") {
+                                                    setSelectedOrder(item);
+                                                }
+                                                if (item.action === "Start Processing") {
+                                                    setProcessingOrder(item);
+                                                }
+                                                if (item.action === "View Report") {
+                                                    setReportOrder(item);
+                                                }
+                                            }}
+                                         >
                                             {item.action}
                                          </button>
                                             </td> 
@@ -104,6 +124,24 @@ const TestQueue=() =>{
                 </div>
             </div>
         </div>
+        {selectedOrder && (
+            <Enterresult
+                order={selectedOrder}
+                onClose={() => setSelectedOrder(null)}
+            />
+        )}
+        {processingOrder && (
+            <StartProcessing
+                order={processingOrder}
+                onClose={() => setProcessingOrder(null)}
+            />
+        )}
+        {reportOrder && (
+            <LaboratoryReport
+                order={reportOrder}
+                onClose={() => setReportOrder(null)}
+            />
+        )}
     </section>
    );
 };

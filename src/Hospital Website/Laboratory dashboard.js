@@ -1,81 +1,133 @@
-import React from "react";
-import "./App.css";
-const LaboratoryReport=()=>{
-    return(
-        <div className="report-modal">
-            <div className="report-container">
-                <div className="report-header">
-                    <h2>Laboratory Test</h2>
-                    <span>LAB003</span>
-                </div>
-                <div className="report-card">
-                    <div className="hospital-info">
-                        <h1>MediCare Hospital</h1>
-                        <h4>Clinical Laboratory Services</h4>
-                        <p>ISO 15189 Accredited</p>
-                    </div>
-                    <div className="info-section">
-                        <div className="patient-info">
-                            <h5>Patient information</h5>
-                            <div classname="info-row">
-                                <span>Name:</span>
-                                <span>Emily Davis</span>
-                                </div>  
-                                <div className="info-row">
-                                    <span>ID:</span>
-                                    <span>PAT004</span>
-                                </div>
-                                <div className="info-row">
-                                    <span>Age/Gender</span>
-                                    <span>45yr/Male</span>
-                                </div>
-                        </div>
-                        <div className="test-info">
-                            <h5>Test information</h5>
-                            <div className="info-row">
-                                <span>Test:</span>
-                                <span>HbA1c</span>
-                            </div>
-                            <div className="info-row">
-                                <span>Order ID:</span>
-                                <span>LAB003</span>
-                            </div>
-                            <div className="info-row">
-                                <span>Ordered By:</span>
-                                <span>Dr.James Wilson</span>
-                            </div>
-                            <div className="info-row">
-                                <span>Report Date:</span>
-                                <span>1/19/2026</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div classname="result-section">
-                        <h5>Test Result</h5>
-                        <table className="result-table">
-                            <thread>
-                                <tr>
-                                    <th>Parameter</th>
-                                    <th>Result</th>
-                                    <th>Unit</th>
-                                    <th>Reference Range</th>
-                                    <th>Flag</th>
-                                </tr>
-                            </thread>
-                            <tbody>
-                                <tr>
-                                    <td>HbaA1c</td>
-                                    <td>Normal</td>
-                                    <td>-</td>
-                                    <td>Within limits</td>
-                                    <td><span class="normal-badge">Normal</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+import React, { useState } from "react";
+import Laboratory2 from "./Laboratory2";
+
+const LaboratoryReport = ({ order, onClose }) => {
+  const [showReportActions, setShowReportActions] = useState(false);
+  const currentOrder = order || {
+    orderid: "LAB003",
+    patient: "Emily Davis",
+    patientid: "PAT004",
+    test: "HbA1c",
+    doctor: "Dr. James Wilson",
+  };
+
+  if (showReportActions) {
+    return <Laboratory2 order={currentOrder} onClose={onClose} />;
+  }
+
+  return (
+    <div className="lab-report-overlay">
+      <div className="lab-report-modal">
+        <div className="lab-report-header">
+          <div>
+            <h2>Laboratory Test Report</h2>
+            <p>{currentOrder.orderid}</p>
+          </div>
+          <button
+            type="button"
+            className="lab-report-close"
+            onClick={onClose}
+            aria-label="Close laboratory report"
+          >
+            x
+          </button>
         </div>
-    )
-        
-}
+
+        <div className="lab-report-paper">
+          <div className="lab-report-hospital">
+            <h1>MediCare Hospital</h1>
+            <p>Clinical Laboratory Services</p>
+            <span>ISO 15189 Accredited</span>
+          </div>
+
+          <div className="lab-report-info-grid">
+            <section>
+              <h3>Patient Information</h3>
+              <div className="lab-report-row">
+                <span>Name:</span>
+                <strong>{currentOrder.patient}</strong>
+              </div>
+              <div className="lab-report-row">
+                <span>ID:</span>
+                <strong>{currentOrder.patientid}</strong>
+              </div>
+              <div className="lab-report-row">
+                <span>Age/Gender:</span>
+                <strong>45yr / Male</strong>
+              </div>
+            </section>
+
+            <section>
+              <h3>Test Information</h3>
+              <div className="lab-report-row">
+                <span>Test:</span>
+                <strong>{currentOrder.test}</strong>
+              </div>
+              <div className="lab-report-row">
+                <span>Order ID:</span>
+                <strong>{currentOrder.orderid}</strong>
+              </div>
+              <div className="lab-report-row">
+                <span>Ordered By:</span>
+                <strong>{currentOrder.doctor}</strong>
+              </div>
+              <div className="lab-report-row">
+                <span>Report Date:</span>
+                <strong>1/19/2026</strong>
+              </div>
+            </section>
+          </div>
+
+          <section className="lab-report-results">
+            <h3>Test Results</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Result</th>
+                  <th>Unit</th>
+                  <th>Reference Range</th>
+                  <th>Flag</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HbA1c</td>
+                  <td>Normal</td>
+                  <td>-</td>
+                  <td>Within limits</td>
+                  <td>
+                    <span className="lab-report-normal">Normal</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section className="lab-report-interpretation">
+            <h3>Interpretation</h3>
+            <p>
+              All parameters are within normal reference ranges. No significant
+              abnormalities detected.
+            </p>
+          </section>
+        </div>
+
+        <div className="lab-report-actions">
+          <button
+            type="button"
+            className="btn lab-report-next-btn"
+            onClick={() => setShowReportActions(true)}
+          >
+            Open Report Actions
+          </button>
+          <button type="button" className="btn btn-light" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LaboratoryReport;

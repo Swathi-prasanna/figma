@@ -1,9 +1,5 @@
 import React from "react";
-import { MdOutlineBed } from "react-icons/md";
 import { MdWarningAmber } from "react-icons/md";
-import vector from "./Vector.png";
-import { TbActivityHeartbeat } from "react-icons/tb";
-import { LuClipboardList } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa";
 import { LuTestTube } from "react-icons/lu";
 import { LuCircleCheckBig } from "react-icons/lu";
